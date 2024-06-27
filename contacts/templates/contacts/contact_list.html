@@ -1,0 +1,41 @@
+{% extends 'cars/car.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <p>
+            <a class="btn btn-primary" href="{% url 'contacts:contact_create' %}" role="button">Добавить контакт</a>
+        </p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            {% for contact in object_list %}
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <img src="{{ contact.contact_img | media_filter }}">
+                    <div class="card-body">
+                        <p class="card-text">Имя: {{ contact.name }}</p>
+                        <p class="card-text">Фамилия: {{ contact.surname }}</p>
+                        <p class="card-text">Почта: {{ contact.email }}</p>
+                        <div>
+                            <div class="btn-group" style="margin-bottom: 10px;">
+                                <a class="btn btn-primary" style="margin-right: 10px;"
+                                   href="{% url 'contacts:contact_detail' contact.pk %}" role="button">
+                                    Подробнее</a>
+                            </div>
+                            <div class="btn-group ">
+                                <a class="btn btn-primary" style="margin-right: 10px;"
+                                   href="{% url 'contacts:contact_update' contact.pk %}" role="button">
+                                    Редактировать</a>
+                                <a class="btn btn-primary" href="{% url 'contacts:contact_delete' contact.pk %}"
+                                   role="button">
+                                    Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

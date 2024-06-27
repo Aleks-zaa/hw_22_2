@@ -1,0 +1,41 @@
+{% extends 'cars/car.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+<p>
+        <a class="btn btn-primary" href="{% url 'blog:blog_create' %}" role="button">Добавить заметку</a>
+    </p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            {% for blog in object_list %}
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <img src="{{ blog.image | media_filter }}">
+                    <div class="card-body">
+                        <p class="card-text">{{ blog.title }}</p>
+                        <p class="card-text">Описание: {{ blog.description | truncatechars:99 }}</p>
+
+                        <div>
+                            <div class="btn-group" style="margin-bottom: 10px;">
+                                <a class="btn btn-primary" style="margin-right: 10px;"
+                                   href="{% url 'blog:blog_detail' blog.pk %}" role="button">
+                                    Подробнее</a>
+                            </div>
+                            <div class="btn-group ">
+                                <a class="btn btn-primary" style="margin-right: 10px;"
+                                   href="{% url 'blog:blog_update' blog.pk %}" role="button">
+                                    Редактировать</a>
+                                <a class="btn btn-primary" href="{% url 'blog:blog_delete' blog.pk %}" role="button">
+                                    Удалить</a>
+                            </div>
+                        </div>
+                        <p class="card-text">Просмотров: {{ blog.view_counter }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

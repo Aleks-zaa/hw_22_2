@@ -1,0 +1,41 @@
+{% extends 'cars/car.html' %}
+{% block content %}
+<div class="container">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">
+
+                    {% if object %}
+                    Сохранить
+                    {% else %}
+                    Создать
+                    {% endif %}
+
+                </button>
+
+                <a class="btn btn-primary" href="{% url 'cars:product_list' %}"
+                   role="button">Отмена</a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <p class="card-text">Версионность авто</p>
+                <div class="card-body">
+                    {{ formset.management_form }}
+                    {% for form in formset.forms %}
+                    {{ form.as_p }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'cars/car.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        {% if user.is_authenticated %}
+        <p>
+            <a class="btn btn-primary" href="{% url 'cars:product_create' %}" role="button">Добавить авто</a>
+        </p>
+        {% endif %}
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            {% for car in object_list %}
+            <div class="col-4">
+                <div class="card shadow-sm">
+                    <img src="{{ car.photo | media_filter }}">
+                    <div class="card-body">
+                        <p class="card-text">{{ car.name }}</p>
+                        <p class="card-text">Описание: {{ car.description | truncatechars:99 }}</p>
+                        <p class="card-text">Владелец: {{ car.owner }}</p>
+                        <div>
+                            <div class="btn-group" style="margin-bottom: 10px;">
+                                <a class="btn btn-primary" style="margin-right: 10px;"
+                                   href="{% url 'cars:product_detail' car.pk %}" role="button">
+                                    Подробнее</a>
+                            </div>
+                            {% if user.is_authenticated %}
+                            <div class="btn-group ">
+                                <a class="btn btn-primary" style="margin-right: 10px;"
+                                   href="{% url 'cars:product_update' car.pk %}" role="button">
+                                    Редактировать</a>
+                                <a class="btn btn-primary" href="{% url 'cars:product_delete' car.pk %}" role="button">
+                                    Удалить</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% for version in car.versions.all %}
+                        {% if version.sign %}
+                        <p class="card-text">Версия: {{ version.number }}. Название: {{ version.name }}</p>
+                        {% endif %}
+                        {% endfor %}
+
+                        <p class="card-text">Просмотров: {{ car.view_counter }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

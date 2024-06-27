@@ -1,0 +1,25 @@
+{% extends 'cars/car.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                        {% csrf_token %}
+                    </div>
+                     <p class="card-text">Хотите удалить {{ object.title }}</p>
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">
+                       Удалить
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                    <a class="btn btn-primary" href="{% url 'blog:blog_list' %}" role="button">
+                        Отмена</a>
+                   </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

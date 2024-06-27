@@ -1,0 +1,27 @@
+{% extends 'cars/car.html' %}
+{% block content %}
+<div class="container">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    {% if object %}
+                        <h5 class="card-title">Редактирование профиля</h5>
+                    {% else %}
+                        <h5 class="card-title">Регистрация</h5>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Зарегистрировать
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
